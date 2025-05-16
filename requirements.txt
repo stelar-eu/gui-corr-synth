@@ -1,0 +1,2 @@
+stelar-client>=0.3.6
+stelar_synth_corr_data>=0.0.12

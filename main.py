@@ -12,8 +12,10 @@ def load_credentials(file_path):
     with open(file_path, 'r') as file:
         return json.load(file)
 
+# Add vertical scroll for radio.
 
 st.set_page_config(page_title="CorrSynth", layout="wide")
+
 st.title("CorrSynth")
 st.write("Generate synthetic data based on correlations.")
 
@@ -44,13 +46,12 @@ if "last_selected_dataset" not in st.session_state:
 datasets = st.session_state.stelar_client.datasets[:]
 dataset_names = [ds.name for ds in datasets]
 
-# --- Dataset Selection ---
-selected_dataset_name = st.radio(
+# --- Dataset Selection with scrollable dropdown ---
+selected_dataset_name = st.selectbox(
     "Select Dataset",
     options=dataset_names,
     key="dataset_selection"
 )
-
 # --- Detect Dataset Change ---
 if selected_dataset_name != st.session_state.last_selected_dataset:
     st.session_state.last_selected_dataset = selected_dataset_name
@@ -66,7 +67,8 @@ if st.session_state.current_dataset:
     selected_resource_name = st.radio(
         "Select Resource",
         options=resource_names,
-        key="resource_selection"
+        key="resource_selection",
+        label_visibility='collapsed'
     )
 
     if selected_resource_name:
